@@ -94,11 +94,13 @@ impl Application for App {
     }
 
     fn theme(&self) -> Self::Theme {
-        Theme::Dark
+        Theme::TokyoNight
     }
 
     fn view(&self) -> Element<Self::Message> {
         let options = vec![Option::Rectangle, Option::Window, Option::Fullscreen];
+       
+        // This container holds the option pick list and new screen shot button
 
         let left_container = container(
             row![
@@ -155,6 +157,7 @@ impl Application for App {
     }
 }
 
+
 fn new_icon<'a>() -> Element<'a, Message> {
     icon('\u{E802}')
 }
@@ -167,12 +170,19 @@ fn save_icon<'a>() -> Element<'a, Message> {
     icon('\u{E801}')
 }
 
+// Icons made with a custom font set to contain mainly icons, which are referenced by unicodes
 fn icon<'a>(codepoint: char) -> Element<'a, Message> {
     const ICON_FONT: Font = Font::with_name("svwc-icons");
 
     text(codepoint).font(ICON_FONT).into()
 }
 
+/*  
+* Custom run function for running specific window setttings & custom font.
+* Preferably the window should stay as `resizable: false`
+* This is because some WMs will force the window to resize 
+* to a tiled state.
+*/
 pub fn run() -> Result<(), Error> {
     let flags = Flags::default();
 

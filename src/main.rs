@@ -9,15 +9,15 @@ use capture::video::{self, video_capture};
 
 #[derive(Parser, Debug)]
 struct Args {
-    #[arg(short, long)]
+#[arg(short, long)]
     video: bool,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
 
-    match (args.video) {
-        (true) => {
+    match args.video {
+        true => {
             println!("Captured frames: {:?}", video_capture::capture_video(30, 60));
             Ok(())
         }

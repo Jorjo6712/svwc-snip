@@ -1,9 +1,13 @@
-use xcap::{Monitor, XCapResult};
 use std::thread;
 use std::time::Duration;
+use xcap::{Monitor, XCapResult};
 
 pub fn capture_video(frames: usize, frame_rate: u64) -> XCapResult<Vec<Vec<u8>>> {
-    let monitor = Monitor::all()?.into_iter().find(|m| m.is_primary()).unwrap();
+    let monitor = Monitor::all()?
+        .into_iter()
+        .find(|m| m.name().contains("eDP"))
+        .unwrap_or_else(|| panic!("No suitable monitor found!"));
+
     let mut video_frames = Vec::new();
 
     for _ in 0..frames {
